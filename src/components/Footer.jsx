@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MessageCircle, ArrowUpRight } from 'lucide-react';
 
-import Logo from '../assets/Logo.png';
+import Logo from '../assets/Trans-logo.png';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -17,12 +17,19 @@ export default function Footer() {
       overflow: 'hidden',
     }}>
       {/* Background text */}
-      <div style={{
-        position: 'absolute', bottom: -20, right: -20,
-        fontFamily: 'Syne, sans-serif', fontSize: 'clamp(80px,12vw,160px)',
-        fontWeight: 900, color: 'rgba(252,163,17,0.04)',
-        pointerEvents: 'none', userSelect: 'none', lineHeight: 1,
-      }}>GLOBAL</div>
+      <div className='logo-wrapper'>
+        <img
+          src={Logo}
+          alt="Global Voyager Brand Logo"
+          style={{
+            height: 'clamp(36px, 12vw, 200px)',
+            width: 'auto',
+            objectFit: 'contain',
+            borderRadius: '6px',
+            filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))',
+          }}
+        />
+      </div>
 
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{
@@ -45,9 +52,9 @@ export default function Footer() {
                   filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))',
                 }}
               />
-              <span style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 800, color: '#FFFFFF' }}>
+              {/* <span style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 800, color: '#FFFFFF' }}>
                 GLOBAL<span style={{ color: '#FCA311' }}>VOYAGER</span>
-              </span>
+              </span> */}
             </div>
             <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 14, lineHeight: 1.7, maxWidth: 240, fontFamily: 'DM Sans, sans-serif' }}>
               Expert guidance for your study abroad journey, travel experiences in India, and personalized consultations.

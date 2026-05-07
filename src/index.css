@@ -3,8 +3,8 @@
   --light-gray: #E5E5E5;
   --gold: #FCA311;
   --gold-dark: #e8940a;
-  --navy: #14213D;
-  --navy-light: #1e2f52;
+  --navy: #000000;
+  --navy-light: #000000;
   --black: #000000;
   --font-display: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
@@ -118,5 +118,27 @@ button { cursor: none; }
   }
   a, button, [role="button"], .btn-primary, .btn-outline, .nav-link, .menu-btn {
     cursor: pointer !important;
+  }
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  margin-bottom: 20px;
+  opacity: 0.2;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Small screens */
+@media (max-width: 768px) {
+  .logo-wrapper {
+    right: 10px;
+    margin-bottom: 0;
+    bottom: 5px;
   }
 }

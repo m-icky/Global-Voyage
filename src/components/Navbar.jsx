@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
-import Logo from '../assets/Logo.png';
+import Logo from '../assets/Trans-logo.png';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -63,17 +63,16 @@ export default function Navbar() {
             src={Logo}
             alt="Global Voyager Brand Logo"
             style={{
-              height: 'clamp(32px, 8vw, 44px)',
+              height: 'clamp(36px, 4.2vw, 48px)',
               width: 'auto',
               objectFit: 'contain',
-              borderRadius: '6px',
               flexShrink: 0,
               filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))',
             }}
           />
-          <span style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(13px, 4vw, 18px)', fontWeight: 800, letterSpacing: 0.5, color: '#FFFFFF', whiteSpace: 'nowrap' }}>
+          {/* <span style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(13px, 4vw, 18px)', fontWeight: 800, letterSpacing: 0.5, color: '#FFFFFF', whiteSpace: 'nowrap' }}>
             GLOBAL<span style={{ color: '#FCA311' }}>VOYAGER</span>
-          </span>
+          </span> */}
         </Link>
 
         {/* Desktop links */}
@@ -302,7 +301,7 @@ export default function Navbar() {
           --nav-padding: ${scrolled ? '12px 32px' : '18px 40px'};
           --nav-radius: ${scrolled ? '16px' : '24px'};
         }
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
           :root {
             --nav-top: ${scrolled ? '10px' : '12px'};
             --nav-left: ${scrolled ? '12px' : '12px'};
