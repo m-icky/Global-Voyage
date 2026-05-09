@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import CTASection from '../components/CTASection';
 import { CheckCircle, ChevronDown, Send, Phone, Mail, MessageCircle } from 'lucide-react';
+import DraggableCarousel from '../components/DraggableCarousel';
 
 function PageHero({ label, title, subtitle, image }) {
   return (
@@ -294,26 +295,26 @@ export function Gallery() {
         image="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80"
       />
       <section ref={ref} style={{ padding: 'clamp(80px,10vw,140px) clamp(16px,6vw,100px)', background: '#000' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ columns: '3 250px', gap: 16 }}>
-            {allImages.map((src, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: i * 0.07 }}
-                whileHover={{ scale: 1.02 }}
-                style={{
-                  breakInside: 'avoid',
-                  marginBottom: 16,
-                  overflow: 'hidden',
-                  clipPath: 'polygon(0 0, 93% 0, 100% 7%, 100% 100%, 7% 100%, 0 93%)',
-                  cursor: 'none',
-                }}
-              >
-                <img src={src} alt="" style={{ width: '100%', display: 'block' }} />
-              </motion.div>
-            ))}
+        <div style={{ maxWidth: 1200, margin: '0 auto', overflow: 'hidden' }}>
+          <div style={{ height: '600px', width: '100%', position: 'relative' }}>
+            <DraggableCarousel
+              images={allImages}
+              slideWidth={320}
+              slideHeight={440}
+              gap={30}
+              perspective={1000}
+              rotateY={45}
+              depth={150}
+              activeScale={1.1}
+              inactiveScale={0.8}
+              inactiveOpacity={0.4}
+              snapDuration={0.6}
+              snapEase="power3.out"
+              showArrows={true}
+              arrowColor="#FCA311"
+              showDots={true}
+              dotColor="#FCA311"
+            />
           </div>
         </div>
       </section>
@@ -529,66 +530,86 @@ export function VideoGallery() {
       />
 
       <section ref={ref} style={{ padding: 'clamp(80px,10vw,140px) clamp(16px,6vw,100px)', background: '#000' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 28 }}>
-            {videos.map((vid, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: i * 0.12, duration: 0.6 }}
-                style={{
-                  background: '#14213D',
-                  borderRadius: 0,
-                  overflow: 'hidden',
-                  clipPath: 'polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%)',
-                  cursor: 'none',
-                }}
-              >
-                {/* Thumbnail container */}
-                <div 
-                  onClick={() => setActiveVideo(vid)}
-                  style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden', cursor: 'none' }}
+        <div style={{ maxWidth: 1200, margin: '0 auto', overflow: 'hidden' }}>
+          <div style={{ height: '600px', width: '100%', position: 'relative' }}>
+            <DraggableCarousel
+              items={videos}
+              slideWidth={340}
+              slideHeight={460}
+              gap={30}
+              perspective={1000}
+              rotateY={45}
+              depth={150}
+              activeScale={1.1}
+              inactiveScale={0.8}
+              inactiveOpacity={0.4}
+              snapDuration={0.6}
+              snapEase="power3.out"
+              showArrows={true}
+              arrowColor="#FCA311"
+              showDots={true}
+              dotColor="#FCA311"
+              renderItem={(vid, i, isActive) => (
+                <div
+                  style={{
+                    background: '#14213D',
+                    borderRadius: 0,
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    clipPath: 'polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%)',
+                  }}
                 >
-                  <img src={vid.thumbnail} alt={vid.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    background: 'rgba(0,0,0,0.4)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'background 0.3s',
-                  }} className="play-overlay">
-                    {/* Pulsing Play Button */}
+                  {/* Thumbnail container */}
+                  <div
+                    onClick={() => {
+                      if (isActive) {
+                        setActiveVideo(vid);
+                      }
+                    }}
+                    style={{ position: 'relative', flex: 1, overflow: 'hidden', cursor: isActive ? 'pointer' : 'none' }}
+                  >
+                    <img src={vid.thumbnail} alt={vid.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     <div style={{
-                      width: 64, height: 64,
-                      background: '#FCA311',
-                      borderRadius: '50%',
+                      position: 'absolute', inset: 0,
+                      background: 'rgba(0,0,0,0.4)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: '#14213D',
-                      boxShadow: '0 0 20px rgba(252, 163, 17, 0.4)',
-                    }}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
+                      transition: 'background 0.3s',
+                    }} className="play-overlay">
+                      {/* Pulsing Play Button */}
+                      <div style={{
+                        width: 64, height: 64,
+                        background: '#FCA311',
+                        borderRadius: '50%',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        color: '#14213D',
+                        boxShadow: '0 0 20px rgba(252, 163, 17, 0.4)',
+                      }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
                     </div>
+                    <span style={{
+                      position: 'absolute', bottom: 12, right: 12,
+                      background: 'rgba(0,0,0,0.75)', padding: '4px 8px',
+                      fontFamily: 'DM Sans, sans-serif', fontSize: 11, color: '#FFF',
+                    }}>{vid.duration}</span>
+                    <span style={{
+                      position: 'absolute', top: 12, left: 12,
+                      background: '#FCA311', color: '#14213D',
+                      padding: '3px 10px', fontFamily: 'Syne, sans-serif',
+                      fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase'
+                    }}>{vid.category}</span>
                   </div>
-                  <span style={{
-                    position: 'absolute', bottom: 12, right: 12,
-                    background: 'rgba(0,0,0,0.75)', padding: '4px 8px',
-                    fontFamily: 'DM Sans, sans-serif', fontSize: 11, color: '#FFF',
-                  }}>{vid.duration}</span>
-                  <span style={{
-                    position: 'absolute', top: 12, left: 12,
-                    background: '#FCA311', color: '#14213D',
-                    padding: '3px 10px', fontFamily: 'Syne, sans-serif',
-                    fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase'
-                  }}>{vid.category}</span>
+                  <div style={{ padding: '24px 28px', flexShrink: 0, background: '#14213D' }}>
+                    <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{vid.title}</h3>
+                    <p style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'DM Sans, sans-serif', fontSize: 14, lineHeight: 1.6 }}>{vid.desc}</p>
+                  </div>
                 </div>
-                <div style={{ padding: '24px 28px' }}>
-                  <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{vid.title}</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'DM Sans, sans-serif', fontSize: 14, lineHeight: 1.6 }}>{vid.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+              )}
+            />
           </div>
         </div>
       </section>

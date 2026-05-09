@@ -92,7 +92,7 @@ export default function ScrollyTelling() {
     <>
       {/* Intro static banner */}
       <div style={{
-        padding: 'clamp(80px,10vw,140px) clamp(16px,6vw,100px) 0',
+        padding: 'clamp(80px,10vw,20px) clamp(16px,6vw,100px)',
         background: '#000',
       }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
